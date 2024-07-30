@@ -1,9 +1,15 @@
 package main
 
-import "github.com/Kotravel095/golang-backend-gameshop/calculator"
+import (
+	"github.com/Kotravel095/golang-backend-gameshop/config"
+	"github.com/Kotravel095/golang-backend-gameshop/databases"
+	"github.com/Kotravel095/golang-backend-gameshop/server"
+)
 
-func main() {
-	a := calculator.Add(1,2)
-
-	println(a)
+func main(){
+	conf := config.ConfigGetting()
+	db := databases.NewPostgresDatabase(conf.Database)
+	server := server.NewEchoServer(conf, db.ConnectionGetting())
+	server.Start()
 }
+
