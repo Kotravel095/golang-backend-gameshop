@@ -1,9 +1,12 @@
 package controller
 
 import (
-    "net/http"
-    _itemshopService "github.com/Kotravel095/golang-backend-gameshop/pkg/itemShop/service"
-    "github.com/labstack/echo/v4"
+	"net/http"
+	"github.com/Kotravel095/golang-backend-gameshop/pkg/custom"
+	"github.com/labstack/echo/v4"
+
+	_itemshopService "github.com/Kotravel095/golang-backend-gameshop/pkg/itemShop/service"
+    // _itemshopModel "github.com/Kotravel095/golang-backend-gameshop/pkg/itemShop/model"
 )
 
 type ItemShopControllerImpl struct {
@@ -17,9 +20,12 @@ func NewItemshopControllerImpl(
 }
 
 func (c *ItemShopControllerImpl) Listing(pctx echo.Context) error {
+    // itemFilter := new()
+    // pctx.Bind()
+
     itemModelList, err := c.itemshopService.Listing()
     if err != nil {
-        return pctx.String(http.StatusInternalServerError, err.Error())
+        return custom.Error(pctx, http.StatusInternalServerError, err.Error())
     }
     return pctx.JSON(http.StatusOK, itemModelList)
 }

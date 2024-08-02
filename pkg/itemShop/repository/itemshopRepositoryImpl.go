@@ -4,6 +4,8 @@ import (
 	"github.com/Kotravel095/golang-backend-gameshop/entities"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+
+	_itemshopException  "github.com/Kotravel095/golang-backend-gameshop/pkg/itemShop/exception"
 )
 
 type ItemshopRepositoryImpl struct{
@@ -20,7 +22,7 @@ func (r *ItemshopRepositoryImpl) Listing() ([]*entities.Item, error) {
 
 	if err := r.db.Find(&itemList).Error; err != nil {
 		r.logger.Error("Fail to list items: %s", err.Error())
-		return nil,err
+		return nil, &_itemshopException.ItemListing{}
 	}
 
 	return itemList, nil
